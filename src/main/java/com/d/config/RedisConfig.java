@@ -107,8 +107,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
-        RedisCacheManager redisCacheManager = new RedisCacheManager(
-                redisTemplate);
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
         redisCacheManager.setDefaultExpiration(expired);// 设置缓存过期时间秒
         return redisCacheManager;
     }
@@ -116,8 +115,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     // @Bean
     public RedisTemplate<Serializable, Serializable> redisTemplate() {
         RedisTemplate<Serializable, Serializable> redisTemplate = new RedisTemplate<>();
-        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(
-                Object.class);
+        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);

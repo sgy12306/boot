@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,23 @@ import com.d.web.PetController.Pet;
 
 @Service
 public class PetService {
-	Logger logger = LoggerFactory.getLogger(PetService.class);
+    Logger logger = LoggerFactory.getLogger(PetService.class);
 
-	@Cacheable(value = "pet", key = "'id'+#id")
-	public Pet get(Integer id) {
-		logger.info("get pet  {} from db.", id);
-		return new Pet(id, "cat-" + id);
-	}
+    @Cacheable(value = "pet", key = "'id'+#id")
+    public Pet get(Integer id) {
+        logger.info("get pet  {} from db.", id);
+        return new Pet(id, "cat-" + id);
+    }
 
-	@Cacheable(value = "list", key = "'id'+#pet.id+'name:'+#pet.name")
-	public List<Pet> list(Pet pet) {
-		logger.info("get pet  {} from db.", pet);
-		return Arrays.asList(pet);
-	}
+    @Cacheable(value = "list", key = "'id'+#pet.id+'name:'+#pet.name")
+    public List<Pet> list(Pet pet) {
+        logger.info("get pet  {} from db.", pet);
+        return Arrays.asList(pet);
+    }
+
+    @CacheEvict(value = "pet", key = "'id'+#id")
+    public Integer save(Integer id) {
+        logger.info("edit pet  {} from db.", id);
+        return 1;
+    }
 }
